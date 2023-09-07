@@ -61,6 +61,7 @@ createPlatform(1065, 180, 40, 20);
 createPlatform(245, 180, 150, 20);
 createPlatform(860, 209, 35, 116);
 createPlatform(750, 100, 75, 10);
+createPlatform(1035, 625, 70, 15);
     
     // TODO 2
     // Create collectables
@@ -69,6 +70,7 @@ createPlatform(750, 100, 75, 10);
     // example usage: createCollectable(type, x, y, gravity, bounce)
 
 createCollectable("max", 300, 100, 0.09, 1);
+createCollectable("max", 1045, 545, 0.09, 1);
 createCollectable("max", 775, 20, 0.09, 1);
 
     // TODO 3
