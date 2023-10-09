@@ -1,4 +1,4 @@
 How to push: 
 git add .
-git commit -m "first website and portfolio"
+git commit -m "... insert changes here ..."
 git push
