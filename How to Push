@@ -1,4 +1,4 @@
 How to push: 
-git add .
-git commit -m "... insert changes here ..."
+git add -A
+git commit -m "saving data shapes"
 git push
