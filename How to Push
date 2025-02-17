@@ -1,4 +1,4 @@
 How to push: 
 git add -A
-git commit -m "saving debug exercise"
+git commit -m "saving snake"
 git push 
