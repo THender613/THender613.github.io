@@ -110,9 +110,20 @@ function moveSnake() {
   column for each snakeSquare in the snake's body. The parts of the snake are 
   stored in the Array snake.body and each part knows knows its current 
   column/row properties. 
-  
   */
+  for (i = snake.body; i > 0; i--) {
+    var snakeSquare = snake.body[i];
 
+    var nextSnakeSquare = "???";
+    var nextRow = "???";
+    var nextColumn = "???";
+    var nextDirection = "???";
+
+    snakeSquare.direction = nextDirection;
+    snakeSquare.row = nextRow;
+    snakeSquare.column = nextColumn;
+    repositionSquare(snakeSquare);
+  }
   //Before moving the head, check for a new direction from the keyboard input
   checkForNewDirection();
 
@@ -187,7 +198,18 @@ function handleAppleCollision() {
   */
   var row = 0;
   var column = 0;
-
+  if (snake.tail.direction === "left") {
+    column = snake.tail.column + 1;
+  } 
+  if (snake.tail.direction === "right") {
+    column = snake.tail.column - 1;
+  } 
+  if (snake.tail.direction === "up") {
+    row = snake.tail.row + 1;
+  } 
+  if (snake.tail.direction === "down") {
+    row = snake.tail.row - 1;
+  }
   // code to determine the row and column of the snakeSquare to add to the snake
 
   makeSnakeSquare(row, column);
