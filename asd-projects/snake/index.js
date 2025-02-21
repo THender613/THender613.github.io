@@ -12,8 +12,8 @@ var highScoreElement = $("#highScore");
 // TODO 4a: Create the snake, apple and score variables
 // Game Variables
 snake = {};
-apple = {}; 
-score = 0; 
+apple = {};
+score = 0;
 // Constant Variables
 var ROWS = 20;
 var COLUMNS = 20;
@@ -43,17 +43,17 @@ init();
 
 function init() {
   // TODO 4c-2: initialize the snake
-// initialize the snake's body as an empty Array
-snake.body = [];
+  // initialize the snake's body as an empty Array
+  snake.body = [];
 
-// make the first snakeSquare and set it as the head
-makeSnakeSquare(10, 10);
-snake.head = snake.body[0];
+  // make the first snakeSquare and set it as the head
+  makeSnakeSquare(10, 10);
+  snake.head = snake.body[0];
   // TODO 4b-2: initialize the apple
-makeApple()
+  makeApple();
   // TODO 5a: Initialize the interval
-// start update interval
-updateInterval = setInterval(update, 100);
+  // start update interval
+  updateInterval = setInterval(update, 100);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -174,7 +174,7 @@ function hasCollidedWithApple() {
   if (apple.row === snake.head.row && apple.column === snake.head.column) {
     return true;
   } else {
-  return false;
+    return false;
   }
 }
 
@@ -200,13 +200,13 @@ function handleAppleCollision() {
   var column = 0;
   if (snake.tail.direction === "left") {
     column = snake.tail.column + 1;
-  } 
+  }
   if (snake.tail.direction === "right") {
     column = snake.tail.column - 1;
-  } 
+  }
   if (snake.tail.direction === "up") {
     row = snake.tail.row + 1;
-  } 
+  }
   if (snake.tail.direction === "down") {
     row = snake.tail.row - 1;
   }
@@ -225,7 +225,10 @@ function hasCollidedWithSnake() {
   */
   for (var i = 1; i < snake.body.length; i++) {
     var currentPart = snake.body[i];
-    if (snake.head.row === currentPart.row && snake.head.column === currentPart.column) {
+    if (
+      snake.head.row === currentPart.row &&
+      snake.head.column === currentPart.column
+    ) {
       return true;
     }
   }
@@ -342,6 +345,13 @@ function getRandomAvailablePosition() {
   while (!spaceIsAvailable) {
     randomPosition.column = Math.floor(Math.random() * COLUMNS);
     randomPosition.row = Math.floor(Math.random() * ROWS);
+    for (var i = snake.body.length - 1; i >= 0; i--) {
+      var snakePart = snake.body[i];
+      if (apple.row === snakePart.row && apple.column === snakePart.column) {
+        spaceIsAvailable = false;
+      }
+    }
+
     spaceIsAvailable = true;
 
     /*
