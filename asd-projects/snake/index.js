@@ -350,10 +350,8 @@ function getRandomAvailablePosition() {
       if (apple.row === snakePart.row && apple.column === snakePart.column) {
         spaceIsAvailable = false;
       }
-    }
-
     spaceIsAvailable = true;
-
+    }
     /*
     TODO 13: After generating the random position determine if that position is
     not occupied by a snakeSquare in the snake's body. If it is then set 
