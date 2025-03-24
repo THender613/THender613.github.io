@@ -56,8 +56,33 @@ function runProgram(){
       walker.speedY = -5; 
       console.log("UP pressed"); 
     }
+    if (event.which === KEY.RIGHT) {
+      walker.speedX = 5;
+      console.log("RIGHT pressed");
+    }
+    if (event.which === KEY.DOWN) {
+      walker.speedY = 5;
+      console.log("DOWN pressed");
+    }
   }
-
+  function handleKeyUp(event){
+    if (event.which === KEY.LEFT) {
+      walker.speedX = 0;
+      console.log("LEFT released");
+    }
+    if (event.which === KEY.UP) {
+      walker.speedY = 0;
+      console.log("UP released");
+    }
+    if (event.which === KEY.RIGHT) {
+      walker.speedX = 0;
+      console.log("RIGHT released");
+    }
+    if (event.which === KEY.DOWN) {
+      walker.speedY = 0;
+      console.log("DOWN released");
+    }
+  }
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
@@ -70,5 +95,49 @@ function runProgram(){
     // turn off event handlers
     $(document).off();
   }
-  
+  //taking an object and moving it
+  function repositionGameItem(item) {
+    //pulling all relevant data
+    let speedX = item.speedX;
+    let speedY = item.speedY;
+
+    item.coordX += speedX;
+    item.coordY += speedY;
+  }
+  //taking an object and moving it visually
+  function redrawGameItem(item) {
+    //utilizes relavent data, except speed
+    let coordX = item.coordX;
+    let coordY = item.coordY;
+    //redraws the x pixels from the left and y pixels from the top
+    $("#walker").css("left", coordX);
+    $("#walker").css("top", coordY);
+  }
+  //be moved behind walls when past them
+  function wallCollision(item) {
+    //pulls relevant data and makes containers.
+    let coordX = item.coordX;
+    let coordY = item.coordY;
+    let speedX = item.speedX;
+    let speedY = item.speedY;
+    let width = $("#board").width() - 45;
+    let height = $("#board").height() - 45;
+
+    if (coordX < 0) {
+      //collide with left wall
+      item.coordX -= speedX;
+    }
+    if (coordY < 0) {
+      //collide with top wall
+      item.coordY -= speedY;
+    }
+    if (coordX > width) {
+      //collide with right wall
+      item.coordX -= speedX;
+    }
+    if (coordY > height) {
+      //collide with bottom wall
+      item.coordY -= speedY;
+    }
+  }
 }
