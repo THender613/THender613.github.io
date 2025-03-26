@@ -1,4 +1,4 @@
 How to push: 
 git add -A
-git commit -m "saving walker"
+git commit -m "saving [project name here]" 
 git push 
