@@ -20,9 +20,10 @@ function resetAndRender() {
 // all of your apply functions
 function applyAndRender() {
   // Multiple TODOs: Call your apply function(s) here
-  applyFilter(); 
-  
-
+  applyFilter(reddify); 
+  applyFilter(keepInBounds); 
+  applyFilter(decreaseBlue); 
+  applyFilter(increaseGreenByBlue); 
   // do not change the below line of code
   render($("#display"), image);
 }
@@ -32,25 +33,48 @@ function applyAndRender() {
 /////////////////////////////////////////////////////////
 
 // TODO 1, 2 & 4: Create the applyFilter function here
-function applyFilter() {
+function applyFilter(filterFunction) {
   for (var r = 0; r < image.length; r++) {
     for (var c = 0; c < image[r].length; c++) {
-      var rgbString = image[r]; 
+      var rgbString = image[r][c]; 
       var rgbNumbers = rgbStringToArray(rgbString); 
+      filterFunction(rgbNumbers); 
+      rgbString = rgbArrayToString(rgbNumbers); 
+      image[r][c] = rgbString; 
     }
   }
 }
-
 // TODO 7: Create the applyFilterNoBackground function
-
-
+function applyFilterNoBackground() {
+  var backgroundColor = image[0][0]; 
+  for (var r = 0; r < image.length; r++) {
+    for (var c = 0; c < image[r].length; c++) {
+      var rgbString = image[r][c]; 
+      var rgbNumbers = rgbStringToArray(rgbString); 
+      filterFunction(rgbNumbers); 
+      rgbString = rgbArrayToString(rgbNumbers); 
+      image[r][c] = rgbString; 
+    }
+  }
+}
 // TODO 5: Create the keepInBounds function
-
-
+function keepInBounds(bumba) {
+  (bumba < 0) ? 
+  bumba = 0 : 
+  (bumba > 255) ? 
+  bumba = 255 : 
+  bumba = bumba; 
+  return bumba; 
+} 
 // TODO 3: Create reddify function
-
-
+function reddify(argh) {
+  argh[RED] = 200; 
+}
 // TODO 6: Create more filter functions
-
-
+function decreaseBlue(arrway) {
+  arrway[BLUE] = keepInBounds(arrway[BLUE] - 50);
+} 
+function increaseGreenByBlue(arkay) {
+  arkay[GREEN] = keepInBounds(arkay[BLUE] + arkay[GREEN]); 
+}
 // CHALLENGE code goes below here
