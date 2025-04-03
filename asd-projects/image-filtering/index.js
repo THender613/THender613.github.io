@@ -21,9 +21,8 @@ function resetAndRender() {
 function applyAndRender() {
   // Multiple TODOs: Call your apply function(s) here
   applyFilter(reddify); 
-  applyFilter(keepInBounds); 
-  applyFilter(decreaseBlue); 
-  applyFilter(increaseGreenByBlue); 
+  applyFilterNoBackground(decreaseBlue); 
+  applyFilterNoBackground(increaseGreenByBlue); 
   // do not change the below line of code
   render($("#display"), image);
 }
@@ -45,26 +44,24 @@ function applyFilter(filterFunction) {
   }
 }
 // TODO 7: Create the applyFilterNoBackground function
-function applyFilterNoBackground() {
-  var backgroundColor = image[0][0]; 
+function applyFilterNoBackground(filterNoB) {
+  var backColor = image[0][0]; 
   for (var r = 0; r < image.length; r++) {
     for (var c = 0; c < image[r].length; c++) {
       var rgbString = image[r][c]; 
       var rgbNumbers = rgbStringToArray(rgbString); 
-      filterFunction(rgbNumbers); 
-      rgbString = rgbArrayToString(rgbNumbers); 
+      if (backColor !== rgbString) {
+        filterNoB(rgbNumbers); 
+        rgbString = rgbArrayToString(rgbNumbers); 
+      }
       image[r][c] = rgbString; 
     }
   }
 }
 // TODO 5: Create the keepInBounds function
 function keepInBounds(bumba) {
-  (bumba < 0) ? 
-  bumba = 0 : 
-  (bumba > 255) ? 
-  bumba = 255 : 
-  bumba = bumba; 
-  return bumba; 
+  return bumba < 0 ? bumba = 0 : bumba > 255 ? 255 : bumba; 
+ 
 } 
 // TODO 3: Create reddify function
 function reddify(argh) {
