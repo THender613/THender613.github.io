@@ -1,4 +1,3 @@
 How to push: 
-git add -A
-git commit -m "saving [project name here]" 
+git commit -a -m "saving [sorting]" 
 git push 
