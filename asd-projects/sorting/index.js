@@ -13,7 +13,8 @@ The CSS ids you will work with are:
 /////////////////////// YOUR WORK GOES BELOW HERE /////////////////////
 ///////////////////////////////////////////////////////////////////////
 
-// TODO 2: Implement bubbleSort
+// TODO 2: Implement bubbleSort 
+// bubble sorts the array by checking if one value is larger than the other and swaps them if so 
 async function bubbleSort(array) {
     for(var i = 0; i < array.length; i++) {
         for(var j = array.length - 1; j >= i + 1; j--) {
@@ -25,9 +26,9 @@ async function bubbleSort(array) {
         }
     }
 }
-// bubble sorts the array
 
-// TODO 3: Implement quickSort
+// TODO 3: Implement quickSort 
+// quick sorts the array by putting a pivot 
 async function quickSort(array, left, right) {
     if((right - left) > 0){
         var index = await partition(array,left,right);
@@ -39,7 +40,6 @@ async function quickSort(array, left, right) {
         }
     }
 } 
-// quick sorts the array 
 
 // TODOs 4 & 5: Implement partition
 async function partition(array,left,right){
@@ -56,14 +56,14 @@ async function partition(array,left,right){
       return left + 1; 
    }
 
-// TODO 1: Implement swap
+// TODO 1: Implement swap 
+// swaps the two items in the array by creating a temp variable 
 function swap(array, i, j) {
     let temp = array[i]; 
     array[i] = array[j]; 
     array[j] = temp; 
     drawSwap(array, i, j); 
 }
-// swaps the two items in the array 
 
 ///////////////////////////////////////////////////////////////////////
 /////////////////////// YOUR WORK GOES ABOVE HERE /////////////////////
