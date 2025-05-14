@@ -4,7 +4,7 @@ body {
 }
 
 #board {
-  width: 440px;
+  width: 640px;
   height: 440px;
   border: 1px solid white;
   background-color: black;
@@ -33,7 +33,7 @@ body {
 
   /* positioning */
   position: absolute;
-  left: 205px;   /* Uncomment if you want to set a "starting" position */
+  left: 305px;   /* Uncomment if you want to set a "starting" position */
   top: 205px;    /* Uncomment if you want to set a "starting" position */
 }
 

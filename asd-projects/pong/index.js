@@ -10,7 +10,12 @@ function runProgram(){
   // Constant Variables
   const FRAME_RATE = 60;
   const FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
-  
+  var KEY = {
+    W: 87, 
+    S: 38, 
+    UP: 38, 
+    DOWN: 40 
+  }
   // Game Item Objects
 
 
@@ -42,7 +47,18 @@ function runProgram(){
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  
+  function factory(id) {
+    var gameItem = {}
+    gameItem.id = id;
+    gameItem.x = parseFloat($(id).css("left"));
+    gameItem.y = parseFloat($(id).css("top"));
+    gameItem.speedX = 0;
+    gameItem.speedY = 0;
+    gameItem.width = $(id).width();
+    gameItem.height = $(id).height();
+    return gameItem; 
+  }
+
   function endGame() {
     // stop the interval timer
     clearInterval(interval);
