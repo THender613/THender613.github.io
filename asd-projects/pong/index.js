@@ -21,7 +21,8 @@ function runProgram(){
 
   // one-time setup
   let interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
-  $(document).on('eventType', handleEvent);                           // change 'eventType' to the type of event you want to handle
+  $(document).on('eventType', handleKeyUp);
+  $(document).on('eventType', handleKeyDown);                         // change 'eventType' to the type of event you want to handle
 
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
@@ -33,16 +34,49 @@ function runProgram(){
   */
   function newFrame() {
     
-
   }
-  
   /* 
-  Called in response to events.
+  Called in response to keypresses.
   */
-  function handleEvent(event) {
-
+  function handleKeyDown(event) {
+    if (event.which === KEY.W) {
+      leftPaddle.speedY = -5;
+      console.log("W pressed");
+    }
+    if (event.which === KEY.S) {
+      leftPaddle.speedY = 5;
+      console.log("S pressed");
+    }
+    if (event.which === KEY.UP) {
+      rightPaddle.speedY = -5;
+      console.log("UP pressed");
+    }
+    if (event.which === KEY.DOWN) {
+      rightPaddle.speedY = 5;
+      console.log("DOWN pressed");
+    }
   }
-
+  /* 
+    Called in response to key releases.
+  */
+  function handleKeyUp(event) {
+    if (event.which === KEY.W) {
+      leftPaddle.speedY = 0;
+      console.log("W released");
+    }
+    if (event.which === KEY.S) {
+      leftPaddle.speedY = 0;
+      console.log("S released");
+    }
+    if (event.which === KEY.UP) {
+      rightPaddle.speedY = 0;
+      console.log("UP released");
+    }
+    if (event.which === KEY.DOWN) {
+      rightPaddle.speedY = 0;
+      console.log("DOWN released");
+    }
+  }
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
