@@ -16,14 +16,19 @@ function runProgram(){
     UP: 38, 
     DOWN: 40 
   }
+  const BOARD_WIDTH = $("#board").width();
+  const BOARD_HEIGHT = $("#board").height()
   // Game Item Objects
-
-
+  var leftPaddle = ObjectFactory("#leftPaddle");
+  var rightPaddle = ObjectFactory("#rightPaddle");
+  var ball = ObjectFactory("#ball");
+  var player1Score = 0;
+  var player2Score = 0;
   // one-time setup
   let interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
   $(document).on('eventType', handleKeyUp);
   $(document).on('eventType', handleKeyDown);                         // change 'eventType' to the type of event you want to handle
-
+  startBall();
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +38,15 @@ function runProgram(){
   by calling this function and executing the code inside.
   */
   function newFrame() {
-    
+    repositionGameItem(leftPaddle);
+    repositionGameItem(rightPaddle);
+    repositionGameItem(ball);
+    wallCollision(leftPaddle);
+    wallCollision(rightPaddle);
+    wallCollision(ball);
+    redrawGameItem(leftPaddle);
+    redrawGameItem(rightPaddle);
+    redrawGameItem(ball);
   }
   /* 
   Called in response to keypresses.
@@ -81,8 +94,8 @@ function runProgram(){
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  function factory(id) {
-    var gameItem = {}
+  function ObjectFactory(id) {
+    var gameItem = {};
     gameItem.id = id;
     gameItem.x = parseFloat($(id).css("left"));
     gameItem.y = parseFloat($(id).css("top"));
@@ -93,6 +106,120 @@ function runProgram(){
     return gameItem; 
   }
 
+  //taking an object and moving it
+  function repositionGameItem(item) {
+    //pulling all relevant data
+    let speedX = item.speedX;
+    let speedY = item.speedY;
+    //move position in data
+    item.x += speedX;
+    item.y += speedY;
+  }
+  //taking an object and moving it visually
+  function redrawGameItem(item) {
+    //pulling all relevant data, minus speed values, it's already been moved by repositionGameItem
+    let coordX = item.x;
+    let coordY = item.y;
+    let id = item.id;
+    //redraw X pixels from the left of origin and Y pixels from the top according to new values from repositionGameItem
+    $(item.id).css("left", coordX);
+    $(item.id).css("top", coordY);
+  }
+  //be moved behind walls when past them
+  function wallCollision(item) {
+    //pull relevant data, dont copy coords to a container you need to edit them directly, not the copied version
+    //actually nevermind, do make containers for shortening the conditionals parts
+    let coordX = item.x;
+    let coordY = item.y;
+    let speedX = item.speedX;
+    let speedY = item.speedY;
+    let width = BOARD_WIDTH; 
+    let height = BOARD_HEIGHT; 
+
+    if(doCollide(ball,leftPaddle)) {
+      //collide with left paddle
+      item.x -= speedX;
+      item.speedX = -speedX;
+    }
+    if(coordX < 0){
+      //ball collides with left wall, reset ball, increment score
+      if(item.id === "#ball"){
+        player2Score++;
+        $("#score2").text("Player 2 Score: " + player2Score);
+        if(player2Score === 7){
+          endGame();
+          alert("Player 2 Wins! Press Enter to randomize colors when you refresh!");
+        }
+        startBall();
+      }
+    }
+    if (coordY < 0) {
+      //collide with top wall
+      item.y -= speedY;
+      item.speedY = -speedY;
+    }
+    if (coordX + item.width > width || doCollide(ball,rightPaddle)) {
+      //collide with right wall
+      item.x -= speedX;
+      item.speedX = -speedX;
+    }
+    if (coordY + item.height > height) {
+      //collide with bottom wall
+      item.y -= speedY;
+      item.speedY = -speedY;
+    }
+    if(coordX + item.width > width){
+      //ball collides with right paddle, reset ball, increment score
+      if(item.id === "#ball"){
+        player1Score++;
+        $("#score1").text("Player 1 Score: " + player1Score);
+        if(player1Score === 7){
+          endGame();
+          alert("Player 1 Wins! Press Enter to randomize colors when you refresh!");
+        }
+        startBall();
+      }
+    }
+  }
+  //handle paddle-ball collisions
+  function doCollide(square1, square2) {
+    // TODO: calculate and store the remaining
+    // sides of the square1
+    square1.leftX = square1.x;
+    square1.topY = square1.y;
+    square1.rightX = square1.x+square1.width;
+    square1.bottomY = square1.y+square1.height;
+    // TODO: Do the same for square2
+    square2.leftX = square2.x;
+    square2.topY = square2.y;
+    square2.rightX = square2.x+square2.width;
+    square2.bottomY = square2.y+square2.height;
+    //debugger;
+    // TODO: Return true if they are overlapping, false otherwise
+    if(square1.leftX > square2.rightX){
+      return false;
+    } else if(square1.rightX < square2.leftX){
+      return false;
+    } else if(square1.topY > square2.bottomY){
+      return false;
+    } else if(square1.bottomY < square2.topY){
+      return false;
+    } else {
+      return true;
+    }
+    // Hint: use the following conditions:
+      // red left < blue right
+      // red right > blue left
+      // red top < blue bottom
+      // red bottom > blue top
+  }
+  // make ball's starting position and random speed
+  function startBall(){
+    ball.x = (BOARD_WIDTH / 2);
+    ball.y = (BOARD_HEIGHT / 2);
+    ball.speedX = randomNum = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1);
+    ball.speedY = randomNum = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1);
+  }
   function endGame() {
     // stop the interval timer
     clearInterval(interval);
@@ -102,3 +229,4 @@ function runProgram(){
   }
   
 }
+// most of this was copied from Remy's code. I was not able to finish this fast enough because my classmates were distracting me the whole time. 
