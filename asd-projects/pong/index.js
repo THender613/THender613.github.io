@@ -137,7 +137,7 @@ function runProgram(){
         $("#score2").text("Player 2 Score: " + player2Score);
         if(player2Score === 7){
           endGame();
-          alert("Player 2 Wins! Press Enter to randomize colors when you refresh!");
+          alert("Player 2 Wins!");
         }
         startBall();
       }
@@ -164,7 +164,7 @@ function runProgram(){
         $("#score1").text("Player 1 Score: " + player1Score);
         if(player1Score === 7){
           endGame();
-          alert("Player 1 Wins! Press Enter to randomize colors when you refresh!");
+          alert("Player 1 Wins!");
         }
         startBall();
       }
