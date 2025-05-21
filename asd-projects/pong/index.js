@@ -12,7 +12,7 @@ function runProgram(){
   const FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
   var KEY = {
     W: 87, 
-    S: 38, 
+    S: 83, 
     UP: 38, 
     DOWN: 40 
   }
@@ -26,8 +26,8 @@ function runProgram(){
   var player2Score = 0;
   // one-time setup
   let interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
-  $(document).on('eventType', handleKeyUp);
-  $(document).on('eventType', handleKeyDown);                         // change 'eventType' to the type of event you want to handle
+  $(document).on('keyup', handleKeyUp);
+  $(document).on('keydown', handleKeyDown);                         // change 'eventType' to the type of event you want to handle
   startBall();
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
@@ -44,9 +44,6 @@ function runProgram(){
     wallCollision(leftPaddle);
     wallCollision(rightPaddle);
     wallCollision(ball);
-    redrawGameItem(leftPaddle);
-    redrawGameItem(rightPaddle);
-    redrawGameItem(ball);
   }
   /* 
   Called in response to keypresses.
@@ -114,16 +111,8 @@ function runProgram(){
     //move position in data
     item.x += speedX;
     item.y += speedY;
-  }
-  //taking an object and moving it visually
-  function redrawGameItem(item) {
-    //pulling all relevant data, minus speed values, it's already been moved by repositionGameItem
-    let coordX = item.x;
-    let coordY = item.y;
-    let id = item.id;
-    //redraw X pixels from the left of origin and Y pixels from the top according to new values from repositionGameItem
-    $(item.id).css("left", coordX);
-    $(item.id).css("top", coordY);
+    $(item.id).css("left", item.x);
+    $(item.id).css("top", item.y); 
   }
   //be moved behind walls when past them
   function wallCollision(item) {
